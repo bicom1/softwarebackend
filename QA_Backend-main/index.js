@@ -36,12 +36,13 @@ const {
 } = require("./controller/calendarData");
 
 // https://bicdashboard.vercel.app
+// https://qasoftwarebicom.vercel.app/
 // http://localhost:3000
 
 const server = http.createServer(app);
 const io = socket(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://qasoftwarebicom.vercel.app/",
     methods: ["GET", "POST"],
     credentials: true,
   },
