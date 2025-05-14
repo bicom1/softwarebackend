@@ -35,7 +35,6 @@ const {
   getCalendarFilterDataEvaluation,
 } = require("./controller/calendarData");
 
-// https://bicdashboard.vercel.app
 // https://qasoftwarebicom.vercel.app/
 // http://localhost:3000
 
