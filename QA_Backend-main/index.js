@@ -35,13 +35,13 @@ const {
   getCalendarFilterDataEvaluation,
 } = require("./controller/calendarData");
 
-// https://qasoftwarebicom.vercel.app/
+// https://qasoftwarebicom.vercel.app
 // http://localhost:3000
 
 const server = http.createServer(app);
 const io = socket(server, {
   cors: {
-    origin: "https://qasoftwarebicom.vercel.app/",
+    origin: "https://qasoftwarebicom.vercel.app",
     methods: ["GET", "POST"],
     credentials: true,
   },
