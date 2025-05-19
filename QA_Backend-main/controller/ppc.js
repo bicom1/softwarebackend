@@ -1,4 +1,4 @@
-const Ppc = require('../model/Ppc');
+const Ppc = require('../model/ppc');
 const userModel = require("../model/user");
 
 exports.ppc = async (req, res) => {

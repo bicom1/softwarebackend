@@ -38,9 +38,10 @@ const users = new mongoose.Schema({
   ppc: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "ppc",
+      ref: "Ppc", 
     },
   ],
+  
 });
 
 module.exports = mongoose.model("User", users);

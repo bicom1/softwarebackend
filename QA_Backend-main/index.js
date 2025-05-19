@@ -15,6 +15,7 @@ const {
   fetchEvaluation,
   getUserEvaluationAndEscalation,
   agentNameshow,
+  fetchppc,
 } = require("./controller/users");
 const {
   escalation,
@@ -88,6 +89,7 @@ app.post("/getuserdata/:id/:name", auth, getUserDetails);
 app.get("/notification", auth, getNotification);
 app.get("/fetch-evaluation/:id", auth, fetchEvaluation);
 app.get("/fetch-escalation/:id", auth, fetchEscalation);
+app.get("/fetch-ppc/:id",auth, fetchppc)
 app.get("/get-data/:id", auth, getUserEvaluationAndEscalation);
 app.get("/getfilteredscalations", getFilteredEscalations);
 app.get("/getuserdata/:name", auth, getUserDetails);
