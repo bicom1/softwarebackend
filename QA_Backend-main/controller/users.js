@@ -52,18 +52,6 @@ exports.login = async (req, res) => {
   }
 };
 
-// exports.fetchUser = async (req, res) => {
-//   try {
-//     const user = await User.find()
-//       .select("-password")
-//       .populate("evaluationRating");
-
-//     res.status(200).json({ user, success: true });
-//   } catch (error) {
-//     console.error("Error during login:", error);
-//     res.status(500).json({ message: "Internal server error" });
-//   }
-// };
 
 exports.agentNameshow = async (req, res) => {
   try {
@@ -131,33 +119,6 @@ exports.fetchppc = async (req, res) => {
   }
 };
 
-
-
-
-
-// exports.fetchUser = async (req, res) => {
-//     try {
-//         const users = await User.find()
-//             .select('-password')
-//             .populate({
-//                 path: 'escalationdetail',
-//                 select: 'agentName'
-//             })
-//             .populate('evaluationRating');
-
-//         // users.forEach((user) => {
-//         //     console.log(`User: ${user.email}`);
-//         //     user.escalationdetail.forEach(async (escalation) => {
-//         //         console.log(`Agent Name: ${escalation.agentName}`);
-//         //     });
-//         // });
-
-//         res.status(200).json({ users, success: true });
-//     } catch (error) {
-//         console.error('Error during fetching users:', error);
-//         res.status(500).json({ message: 'Internal server error' });
-//     }
-// };
 
 exports.fetchUserById = async (req, res) => {
   try {
