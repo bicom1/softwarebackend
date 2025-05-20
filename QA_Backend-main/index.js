@@ -15,14 +15,14 @@ const {
   fetchEvaluation,
   getUserEvaluationAndEscalation,
   agentNameshow,
-  fetchppc,
+  fetchppc
 } = require("./controller/users");
 const {
   escalation,
   getFilteredEscalations,
 } = require("./controller/escalation");
 const { evaluation, EvaluationFromCount } = require("./controller/evaluation");
-const { ppc } = require("./controller/ppc");
+const { ppc } = require("./controller/ppc");  // This is the controller import
 const { auth } = require("./middleware/auth");
 const { notification, getNotification } = require("./controller/notification");
 const parser = require("cookie-parser");
@@ -35,10 +35,8 @@ const {
   getCalendarFilterDataEscalation,
   getCalendarFilterDataEvaluation,
 } = require("./controller/calendarData");
-const ppc = require("./model/ppc");
 
-// https://qasoftwarebicom.vercel.app
-// http://localhost:3000
+
 
 const server = http.createServer(app);
 const io = socket(server, {
@@ -58,6 +56,7 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
+
 app.use(express.json());
 app.use(parser());
 app.use(cors());
@@ -73,6 +72,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+// Routes
 app.post("/register", userRegister);
 app.post("/login", login);
 app.get("/getallusers", fetchUser);
@@ -90,7 +90,7 @@ app.post("/getuserdata/:id/:name", auth, getUserDetails);
 app.get("/notification", auth, getNotification);
 app.get("/fetch-evaluation/:id", auth, fetchEvaluation);
 app.get("/fetch-escalation/:id", auth, fetchEscalation);
-app.get("/fetch-ppc/:id",auth, fetchppc)
+app.get("/fetch-ppc/:id", auth, fetchppc);
 app.get("/get-data/:id", auth, getUserEvaluationAndEscalation);
 app.get("/getfilteredscalations", getFilteredEscalations);
 app.get("/getuserdata/:name", auth, getUserDetails);
@@ -98,12 +98,12 @@ app.get("/getcalendarfilterdataescalation", getCalendarFilterDataEscalation);
 app.get("/getcalendarfilterdataevaluation", getCalendarFilterDataEvaluation);
 
 app.get("/audio/:filename", (req, res) => {
-  20;
   const file = path.join(__dirname, "uploads", req.params.filename);
   res.setHeader("Content-Type", "audio/mpeg");
   res.sendFile(file);
 });
 
+// Socket.io setup
 let roomName = "notification-Room";
 
 io.on("connection", (socket) => {
@@ -114,7 +114,6 @@ io.on("connection", (socket) => {
       "user-connect",
       data.username + "join the room" + roomName
     );
-    // console.log(data.username + 'join the room' + roomName)
   });
 
   socket.on("sent-notification", async (data) => {
@@ -132,10 +131,6 @@ io.on("connection", (socket) => {
   });
 });
 
-// app.post('/upload',upload.single('agentaudio'),(req,res)=>{
-//     console.log(req.body);
-//     console.log(req.file);
-// })
 app.get("/test", (req, res) => {
   res.status(202).json({ message: "test!" });
 });
