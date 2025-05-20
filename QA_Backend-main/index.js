@@ -15,6 +15,7 @@ const {
   fetchEvaluation,
   getUserEvaluationAndEscalation,
   agentNameshow,
+  fetchppc,
 } = require("./controller/users");
 const {
   escalation,
@@ -35,13 +36,13 @@ const {
   getCalendarFilterDataEvaluation,
 } = require("./controller/calendarData");
 
-// https://qasoftwarebicom.vercel.app/
+// https://qasoftwarebicom.vercel.app
 // http://localhost:3000
 
 const server = http.createServer(app);
 const io = socket(server, {
   cors: {
-    origin: "https://qasoftwarebicom.vercel.app/",
+    origin: "https://qasoftwarebicom.vercel.app",
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -88,6 +89,7 @@ app.post("/getuserdata/:id/:name", auth, getUserDetails);
 app.get("/notification", auth, getNotification);
 app.get("/fetch-evaluation/:id", auth, fetchEvaluation);
 app.get("/fetch-escalation/:id", auth, fetchEscalation);
+app.get("/fetch-ppc/:id",auth, fetchppc)
 app.get("/get-data/:id", auth, getUserEvaluationAndEscalation);
 app.get("/getfilteredscalations", getFilteredEscalations);
 app.get("/getuserdata/:name", auth, getUserDetails);

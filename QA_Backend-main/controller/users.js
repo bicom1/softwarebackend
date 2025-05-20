@@ -3,6 +3,7 @@ const teamlead = require("../model/TeamLead");
 const escalation = require("../model/Escalation");
 const evaluation = require("../model/Evaluation");
 const jwt = require("jsonwebtoken");
+const Ppc = require("../model/ppc");
 
 exports.userRegister = async (req, res) => {
   try {
@@ -112,13 +113,27 @@ exports.fetchEvaluation = async (req, res) => {
 exports.fetchEscalation = async (req, res) => {
   try {
     const user = await escalation.find({ owner: req.params.id });
-
     res.status(200).json({ user, success: true });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+exports.fetchppc = async (req, res) => {
+  console.log("Hitting fetchppc endpoint with ID:", req.params.id);
+  try {
+    const user = await Ppc.find({ owner: req.params.id });
+    res.status(200).json({ user, success: true });
+  } catch (error) {
+    console.error("Error in fetchppc:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
+
+
 
 // exports.fetchUser = async (req, res) => {
 //     try {
