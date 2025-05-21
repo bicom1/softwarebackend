@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const Ppc = new mongoose.Schema({
+const Ppc = new Schema({
     owner: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User",
         required: true
     },
@@ -28,4 +28,4 @@ const Ppc = new mongoose.Schema({
     
 });
 
-module.exports = mongoose.model('Ppc', Ppc);
+export default model('Ppc', Ppc);
