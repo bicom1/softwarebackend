@@ -4,7 +4,6 @@ const escalation = require("../model/Escalation");
 const evaluation = require("../model/Evaluation");
 const jwt = require("jsonwebtoken");
 const Marketing = require("../model/Marketing");
-const Ppc = require("../model/Ppc").default;
 
 exports.userRegister = async (req, res) => {
   try {
@@ -109,16 +108,6 @@ exports.fetchEscalation = async (req, res) => {
   }
 };
 
-// exports.fetchppc = async (req, res) => {
-//   console.log("Hitting fetchppc endpoint with ID:", req.params.id);
-//   try {
-//     const user = await Ppc.find({ owner: req.params.id });
-//     res.status(200).json({ user, success: true });
-//   } catch (error) {
-//     console.error("Error in fetchppc:", error);
-//     res.status(500).json({ message: "Internal server error" });
-//   }
-// };
 
 exports.fetchmarketing = async (req, res) => {
   console.log("Hitting fetchmarketing endpoint with ID:", req.params.id);

@@ -22,7 +22,6 @@ const {
   getFilteredEscalations,
 } = require("./controller/escalation");
 const { evaluation, EvaluationFromCount } = require("./controller/evaluation");
-// const { ppc } = require("./controller/ppc");  // This is the controller import
 const { auth } = require("./middleware/auth");
 const { notification, getNotification } = require("./controller/notification");
 const parser = require("cookie-parser");
@@ -84,7 +83,6 @@ app.post("/createEscalation", upload.single("audio"), auth, escalation);
 app.post("/createEvaluation", auth, evaluation);
 app.get("/evaluationfromcount/:id", EvaluationFromCount);
 app.post("/createteamLeaders", auth, addLeader);
-// app.post("/createppc", auth, ppc);
 app.delete("/leaddelete/:id", auth, deleteLeader);
 app.get("/fetchleaders", auth, fetchTeamLead);
 app.get("/fetchuserbyid/:id", fetchUserById);
@@ -92,7 +90,6 @@ app.post("/getuserdata/:id/:name", auth, getUserDetails);
 app.get("/notification", auth, getNotification);
 app.get("/fetch-evaluation/:id", auth, fetchEvaluation);
 app.get("/fetch-escalation/:id", auth, fetchEscalation);
-// app.get("/fetch-ppc/:id", auth, fetchppc);
 app.get("/get-data/:id", auth, getUserEvaluationAndEscalation);
 app.get("/getfilteredscalations", getFilteredEscalations);
 app.get("/getuserdata/:name", auth, getUserDetails);
