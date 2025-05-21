@@ -1,4 +1,5 @@
-const Ppc = require('../model/ppc');
+
+const { default: ppc } = require("../model/Ppc");
 const userModel = require("../model/user");
 
 exports.ppc = async (req, res) => {
@@ -19,7 +20,7 @@ exports.ppc = async (req, res) => {
       leadQuality
     };
 
-    const ppcResponse = await new Ppc(ppcData).save();
+    const ppcResponse = await new ppc(ppcData).save();
 
     await userModel.findByIdAndUpdate(req.user._id, { $push: { ppc: ppcResponse._id } });
 
