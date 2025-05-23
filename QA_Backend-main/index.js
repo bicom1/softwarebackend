@@ -33,6 +33,7 @@ const http = require("http");
 const {
   getCalendarFilterDataEscalation,
   getCalendarFilterDataEvaluation,
+  getcalendarfilterdatamarketing,
 } = require("./controller/calendarData");
 const { marketing } = require("./controller/marketing");
 
@@ -97,6 +98,8 @@ app.get("/getcalendarfilterdataescalation", getCalendarFilterDataEscalation);
 app.get("/getcalendarfilterdataevaluation", getCalendarFilterDataEvaluation);
 app.post("/createmarketing", auth, marketing);
 app.get("/fetch-marketing/:id", fetchmarketing);
+app.get("/getcalendarfilterdatamarketing", getcalendarfilterdatamarketing);
+
 
 
 
