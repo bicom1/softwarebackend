@@ -9,7 +9,7 @@ const MarketingSchema = new mongoose.Schema(
     },
     leadID: {
       type: String,
-      required: [true, "field is required"], // Fixed typo ("require" → "required")
+      required: [true, "field is required"], 
     },
     teamleader: {
       type: String,
@@ -31,4 +31,4 @@ const MarketingSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Marketing", MarketingSchema); // Fixed quotes & variable name
+module.exports = mongoose.model("Marketing", MarketingSchema); 

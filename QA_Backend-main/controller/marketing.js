@@ -29,7 +29,7 @@ exports.marketing = async (req, res) => {
         await marketing.save();
 
         await userModel.findByIdAndUpdate(req.user._id, {
-            $push: { evaluationdetail: marketing._id },  // Changed from evaluation._id to marketing._id
+            $push: { evaluationdetail: marketing._id },  
         });
 
         return res.status(201).json({ message: "Marketing data saved successfully", success: true });
