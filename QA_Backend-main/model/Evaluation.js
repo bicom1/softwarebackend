@@ -1,6 +1,7 @@
+// models/Evaluation.js
 const mongoose = require("mongoose");
 
-const evaluation = new mongoose.Schema(
+const evaluationSchema = new mongoose.Schema(
   {
     owner: {
       type: mongoose.Schema.Types.ObjectId,
@@ -27,36 +28,32 @@ const evaluation = new mongoose.Schema(
       type: String,
       required: [true, "field is require"],
     },
-     addresponsetime:{
-  type:String,
-  required:[true, "field is required"], // ✅ FIXED
-},
+    responsetime: {
+      type: String,
+      required: [true, "field is required"],
+    },
     greetings: {
-      type: String,
+      type: [String], 
+      default: [],
+      validate: {
+        validator: function(arr) {
+          return arr.length <= 3 && 
+                 (arr.length === 0 || 
+                  (arr.length >= 1 && typeof arr[0] === 'string') &&
+                  (arr.length < 2 || typeof arr[1] === 'string') &&
+                  (arr.length < 3 || typeof arr[2] === 'string'));
+        },
+        message: "Greetings must be an array of strings (max 3 elements)"
+      }
     },
-    accuracy: {
-      type: String,
-    },
-    building: {
-      type: String,
-    },
-    presenting: {
-      type: String,
-    },
-    closing: {
-      type: String,
-    },
-    bonus: {
-      type: String,
-    },
-    evaluationsummary: {
-      type: String,
-    },
-    // evaluationpoints: {
-    //   type: [String],
-    //   default: [],    
-    // },
+    accuracy: String,
+    building: String,
+    presenting: String,
+    closing: String,
+    bonus: String,
+    evaluationsummary: String,
   },
   { timestamps: true }
 );
-module.exports = mongoose.model("Evaluation", evaluation);
+
+module.exports = mongoose.model("Evaluation", evaluationSchema);
