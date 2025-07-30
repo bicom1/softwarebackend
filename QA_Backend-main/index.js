@@ -21,7 +21,7 @@ const {
   escalation,
   getFilteredEscalations,
 } = require("./controller/escalation");
-const { evaluation, EvaluationFromCount, updateEvaluation } = require("./controller/evaluation");
+const { evaluation, EvaluationFromCount } = require("./controller/evaluation");
 const { auth } = require("./middleware/auth");
 const { notification, getNotification } = require("./controller/notification");
 const parser = require("cookie-parser");
@@ -82,7 +82,6 @@ app.get("/agentnameshow", agentNameshow);
 app.get("/logout", auth, logout);
 app.post("/createEscalation", upload.single("audio"), auth, escalation);
 app.post("/createEvaluation", auth, evaluation);
-app.put("/updateEvaluation/:id", auth, updateEvaluation);
 app.get("/evaluationfromcount/:id", EvaluationFromCount);
 app.post("/createteamLeaders", auth, addLeader);
 app.delete("/leaddelete/:id", auth, deleteLeader);
