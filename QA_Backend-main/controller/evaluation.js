@@ -25,6 +25,7 @@ exports.evaluation = async (req, res) => {
       agentName: req.body.agentName,
       mod: req.body.mod,
       teamleader: req.body.teamleader,
+      addresponsetime : req.body.addresponsetime,
       greetings: req.body.greetings,
       accuracy: req.body.accuracy,
       building: req.body.building,
@@ -59,6 +60,27 @@ exports.evaluation = async (req, res) => {
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
+exports.updateEvaluation = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const updatedEvaluation = await evaluationModel.findByIdAndUpdate(
+      id,
+      { ...req.body },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedEvaluation) {
+      return res.status(404).json({ success: false, message: "Evaluation not found" });
+    }
+
+    res.status(200).json({ success: true, message: "Updated successfully", evaluation: updatedEvaluation });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Update failed", error: error.message });
   }
 };
 
