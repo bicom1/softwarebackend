@@ -21,7 +21,7 @@ const {
   escalation,
   getFilteredEscalations,
 } = require("./controller/escalation");
-const { evaluation, EvaluationFromCount } = require("./controller/evaluation");
+const { evaluation, EvaluationFromCount, updateEvaluation } = require("./controller/evaluation");
 const { auth } = require("./middleware/auth");
 const { notification, getNotification } = require("./controller/notification");
 const parser = require("cookie-parser");
@@ -42,8 +42,8 @@ const { marketing } = require("./controller/marketing");
 const server = http.createServer(app);
 const io = socket(server, {
   cors: {
-    origin: "https://qasoftwarebicom.vercel.app",
-    // origin:"http://localhost:3000",
+    // origin: "https://qasoftwarebicom.vercel.app",
+    origin:"http://localhost:3000",
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -82,6 +82,7 @@ app.get("/agentnameshow", agentNameshow);
 app.get("/logout", auth, logout);
 app.post("/createEscalation", upload.single("audio"), auth, escalation);
 app.post("/createEvaluation", auth, evaluation);
+app.put("/updateEvaluation/:id", auth, updateEvaluation);
 app.get("/evaluationfromcount/:id", EvaluationFromCount);
 app.post("/createteamLeaders", auth, addLeader);
 app.delete("/leaddelete/:id", auth, deleteLeader);

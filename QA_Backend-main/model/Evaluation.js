@@ -27,6 +27,10 @@ const evaluation = new mongoose.Schema(
       type: String,
       required: [true, "field is require"],
     },
+     addresponsetime:{
+  type:String,
+  required:[true, "field is required"], // ✅ FIXED
+},
     greetings: {
       type: String,
     },
