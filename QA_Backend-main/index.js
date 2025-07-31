@@ -47,8 +47,8 @@ const Escalation = require("./model/Escalation");
 const server = http.createServer(app);
 const io = socket(server, {
   cors: {
-    // origin: "https://qasoftwarebicom.vercel.app",
-    origin:"http://localhost:3000",
+    origin: "https://qasoftwarebicom.vercel.app",
+    // origin:"http://localhost:3000",
     methods: ["GET", "POST"],
     credentials: true,
   },
