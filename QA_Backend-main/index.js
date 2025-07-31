@@ -20,8 +20,12 @@ const {
 const {
   escalation,
   getFilteredEscalations,
+  getAllEscalations,
+  getEscalationById,
+  updateEscalation,
+  deleteEscalation,
 } = require("./controller/escalation");
-const { evaluation, EvaluationFromCount } = require("./controller/evaluation");
+const { evaluation, EvaluationFromCount, editEvaluation, getEvaluationById, deleteEvaluation } = require("./controller/evaluation");
 const { auth } = require("./middleware/auth");
 const { notification, getNotification } = require("./controller/notification");
 const parser = require("cookie-parser");
@@ -36,6 +40,7 @@ const {
   getcalendarfilterdatamarketing,
 } = require("./controller/calendarData");
 const { marketing } = require("./controller/marketing");
+const Escalation = require("./model/Escalation");
 
 
 
@@ -80,22 +85,42 @@ app.post("/login", login);
 app.get("/getallusers", fetchUser);
 app.get("/agentnameshow", agentNameshow);
 app.get("/logout", auth, logout);
+
+// Escalation
 app.post("/createEscalation", upload.single("audio"), auth, escalation);
+app.get("/", auth, getAllEscalations);
+app.get("/escalation/:id", auth, getEscalationById);
+app.put("/edit-escalation/:id", auth, upload.single("audio"), updateEscalation);
+app.delete("/:id", auth, deleteEscalation);
+// app.get("/fetch-escalation/:id", auth, fetchEscalation);
+
+
+// Evaluation 
 app.post("/createEvaluation", auth, evaluation);
+app.put("/edit-evaluation/:id", auth, editEvaluation);
+app.get("/evaluation/:id", auth, getEvaluationById);
 app.get("/evaluationfromcount/:id", EvaluationFromCount);
+app.delete("/evaluation/:id", auth, deleteEvaluation);
+
+
 app.post("/createteamLeaders", auth, addLeader);
 app.delete("/leaddelete/:id", auth, deleteLeader);
 app.get("/fetchleaders", auth, fetchTeamLead);
 app.get("/fetchuserbyid/:id", fetchUserById);
 app.post("/getuserdata/:id/:name", auth, getUserDetails);
 app.get("/notification", auth, getNotification);
+
+
 app.get("/fetch-evaluation/:id", auth, fetchEvaluation);
-app.get("/fetch-escalation/:id", auth, fetchEscalation);
+
+
 app.get("/get-data/:id", auth, getUserEvaluationAndEscalation);
 app.get("/getfilteredscalations", getFilteredEscalations);
 app.get("/getuserdata/:name", auth, getUserDetails);
 app.get("/getcalendarfilterdataescalation", getCalendarFilterDataEscalation);
 app.get("/getcalendarfilterdataevaluation", getCalendarFilterDataEvaluation);
+
+// Market 
 app.post("/createmarketing", auth, marketing);
 app.get("/fetch-marketing/:id", fetchmarketing);
 app.get("/getcalendarfilterdatamarketing", getcalendarfilterdatamarketing);
