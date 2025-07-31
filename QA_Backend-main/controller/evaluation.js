@@ -108,3 +108,66 @@ exports.EvaluationFromCount = async (req, res) => {
     });
   }
 };
+
+exports.editEvaluation = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const updatedFields = {
+      leadID: req.body.leadId,
+      agentName: req.body.agentName,
+      mod: req.body.mod,
+      teamleader: req.body.teamleader,
+      responsetime: req.body.responsetime,
+      greetings: Array.isArray(req.body.greetings) ? req.body.greetings : [req.body.greetings],
+      accuracy: req.body.accuracy,
+      building: req.body.building,
+      presenting: req.body.presenting,
+      closing: req.body.closing,
+      bonus: req.body.bonus,
+      evaluationsummary: req.body.evaluationsummary,
+    };
+
+    const evaluation = await Evaluation.findByIdAndUpdate(id, updatedFields, { new: true });
+
+    if (!evaluation) return res.status(404).json({ success: false, message: "Evaluation not found" });
+
+    res.status(200).json({ success: true, evaluation, message: "Evaluation updated successfully" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server Error", error: error.message });
+  }
+};
+
+exports.getEvaluationById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const evaluation = await Evaluation.findById(id);
+    if (!evaluation) return res.status(404).json({ success: false, message: "Evaluation not found" });
+    res.status(200).json({ success: true, evaluation });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server Error", error: error.message });
+  }
+};
+
+
+exports.deleteEvaluation = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const evaluation = await Evaluation.findByIdAndDelete(id);
+
+    if (!evaluation) return res.status(404).json({ success: false, message: "Evaluation not found" });
+
+    // Remove reference from User model
+    await User.findByIdAndUpdate(evaluation.owner, {
+      $pull: { evaluationdetail: id }
+    });
+
+    // Remove associated EvaluationRating
+    await EvaluationRating.deleteMany({ evaluatedRating: id });
+
+    res.status(200).json({ success: true, message: "Evaluation deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server Error", error: error.message });
+  }
+};

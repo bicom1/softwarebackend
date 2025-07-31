@@ -78,3 +78,75 @@ exports.getFilteredEscalations = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
+exports.getAllEscalations = async (req, res) => {
+  try {
+    const escalations = await escalationModel.find().sort({ createdAt: -1 });
+    res.status(200).json({ escalations, success: true });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch escalations", success: false });
+  }
+};
+
+// READ - Get Escalation by ID
+exports.getEscalationById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const escalation = await escalationModel.findById(id);
+    if (!escalation) {
+      return res.status(404).json({ message: "Escalation not found", success: false });
+    }
+    res.status(200).json({ escalation, success: true });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch escalation", success: false });
+  }
+};
+ 
+
+// UPDATE Escalation
+exports.updateEscalation = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updateData = { ...req.body };
+
+    if (req.file) {
+      updateData.audio = req.file.path;
+    }
+
+    const updated = await escalationModel.findByIdAndUpdate(id, updateData, {
+      new: true,
+    });
+
+    if (!updated) {
+      return res.status(404).json({ message: "Escalation not found", success: false });
+    }
+
+    res.status(200).json({ updated, message: "Escalation updated", success: true });
+  } catch (error) {
+    res.status(500).json({ message: "Update failed", success: false });
+  }
+};
+
+
+// DELETE Escalation
+exports.deleteEscalation = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deleted = await escalationModel.findByIdAndDelete(id);
+    if (!deleted) {
+      return res.status(404).json({ message: "Escalation not found", success: false });
+    }
+
+    // Optionally remove reference from user
+    await userModel.updateMany(
+      { escalationdetail: id },
+      { $pull: { escalationdetail: id } }
+    );
+
+    res.status(200).json({ message: "Escalation deleted", success: true });
+  } catch (error) {
+    res.status(500).json({ message: "Delete failed", success: false });
+  }
+};
